@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ -d /etc/apache2/ ]; then
+  if [ -f /etc/apache2/sites-available_default.conf.dpkg-old ]; then
+    sudo mv /etc/apache2/sites-available_default.conf.dpkg-old /etc/apache2/sites-available/default;
+  fi
+  if [ -f /etc/apache2/envvars.dpkg-old ]; then
+    sudo mv /etc/apache2/envvars.dpkg-old /etc/apache2/envvars;
+  fi
+  if [ -f /etc/apache2/conf-available/security.conf.dpkg-old ]; then
+    sudo mv /etc/apache2/conf-available/security.conf.dpkg-old /etc/apache2/conf-available/security.conf;
+  fi
+  if [ -f /etc/php5/apache2/php.ini.dpkg-old ]; then
+    sudo mv /etc/php5/apache2/php.ini.dpkg-old /etc/php5/apache2/php.ini;
+  fi
+fi
+exit 0;

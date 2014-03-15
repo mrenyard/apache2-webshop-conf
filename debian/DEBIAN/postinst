@@ -1,0 +1,51 @@
+#!/bin/bash
+
+. /usr/share/debconf/confmodule
+db_get apache2-web-conf/remote_ips
+REMOTE_IPS="$RET";
+
+echo "CHECKING FOR firephp/FirePHPCore";
+/usr/bin/pear info firephp/FirePHPCore;
+if [ $? -ne 0 ]; then
+  echo "...INSTALLING";
+  sudo pear channel-discover pear.firephp.org;
+  sudo pear install firephp/FirePHPCore;
+fi
+
+echo "UPDATING /etc/apache2/sites-available/default";
+if [ -f /etc/apache2/sites-available/default.conf ]; then
+  sudo mv /etc/apache2/sites-available/default.conf /etc/apache2/sites-available_default.conf.dpkg-old;
+fi
+sudo cp /tmp/apache2-webshop-conf/etc/apache2/sites-available/default.conf /etc/apache2/sites-available/default.conf
+
+echo "CONFIGURING APACHE2 ENVVARS";
+if [ -f /etc/apache2/envvars ]; then
+  sudo cp /etc/apache2/envvars /etc/apache2/envvars.dpkg-old;
+fi
+sudo echo "export HOSTNAME=\"${HOSTNAME}\"" >> /etc/apache2/envvars;
+
+echo "ADDING APACHE MODULES";
+sudo a2enmod vhost_alias rewrite headers deflate setenvif filter expires include;
+
+echo "SETTING 'ServerTokens' to 'Prod' IN '/etc/apache2/conf-available/security'";
+sudo mv /etc/apache2/conf-available/security.conf /etc/apache2/conf-available_security.conf.dpkg-old;
+sudo awk '{sub("^ServerTokens [A-Z|a-z]+", "ServerTokens Prod");print}' /etc/apache2/conf-available_security.conf.dpkg-old > /etc/apache2/conf-available/security.conf;
+
+echo "SETTING 'expose_php = Off' AND 'date.timezone = Europe/London' IN '/etc/php5/apache2/php.ini'";
+sudo mv /etc/php5/apache2/php.ini /etc/php5/apache2/php.ini.dpkg-old;
+sudo awk '{sub("^expose_php = O(n|ff)", "expose_php = Off");sub("^(;)date.timezone =*", "date.timezone = Europe/London");print}' /etc/php5/apache2/php.ini.dpkg-old > /etc/php5/apache2/php.ini;
+
+echo "SETTING 'date.timezone = Europe/London' IN '/etc/php5/cli/php.ini'";
+sudo mv /etc/php5/cli/php.ini /etc/php5/cli/php.ini.dpkg-old;
+sudo awk '{sub("^(;)date.timezone =*", "date.timezone = Europe/London");print}' /etc/php5/cli/php.ini.dpkg-old > /etc/php5/cli/php.ini;
+
+echo 'Configuring access for the following IP addresses:';
+for IP in ${REMOTE_IPS}; do
+  echo " $IP";
+  sed -e "s/# Allowed remote access IP addresses/# Allowed remote access IP addresses\n  Require ip $IP/g" /etc/apache2/conf-available/webshop.local.conf > /etc/apache2/conf-available/webshop.local.conf.tmp && mv /etc/apache2/conf-available/webshop.local.conf.tmp /etc/apache2/conf-available/webshop.local.conf
+done;
+sudo a2enconf webshop.local;
+
+echo "RESTARTING MODIFIED SERVICES";
+sudo service apache2 reload;
+exit 0;
