@@ -14,5 +14,4 @@ Description: Apache2 WebShop Configuration. Optimized webserver setup.
      including specialist scratch files (css/html)
      firePHP output as standard
  - Live Server Performance Advancements
- - Autoload php class's
  - with PhpDocumentor and PHPUnit
