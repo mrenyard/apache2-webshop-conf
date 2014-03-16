@@ -5,7 +5,9 @@ Apache2 WebShop Configuration. Optimized webserver setup.
  Includes such features as:
  - Maximised Concurent Server Connections
  - Development Mode Switching
+
     including specialist scratch files (css/html)
+
     firePHP output as standard
  - Live Server Performance Advancements
  - with PhpDocumentor and PHPUnit
