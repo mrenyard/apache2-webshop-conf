@@ -11,36 +11,36 @@ Apache2 WebShop Configuration. Optimized webserver setup.
  - with PhpDocumentor and PHPUnit
 
 Part of: WebShop TM Pro (Beta v0.1)
-===================================
 
 Feature List
-------------
 
-Maximised Concurent Server&nbsp;Connections
--------------------------------------------
+Maximised Concurent Server Connections
+--------------------------------------
 
 All browsers set a maximun concurent connections limit (at varying levels),
-following <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html#sec8.1.4"
->Section&nbsp;8.1.4 of the HTTP/1.1&nbsp;RFC</a>. By <q cite=
-"http://www.stevesouders.com/blog/2008/03/20/roundup-on-parallel-connections/#more-9"
->using multiple domain names, such as [style].mydomain.com, [func].mydomain.com,
-[media].mydomain.com, etc., &hellip;[it]&hellip; allows &hellip;[us]&hellip; to
-achieve a multiple of the per server connection limit.</q> (<a href=
-"http://www.stevesouders.com/">Steve&nbsp;Souders</a>).
+following Section 8.1.4 of the HTTP/1.1 RFC
+(http://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html#sec8.1.4)
+
+<blockquote>By using multiple domain names, such as
+[style].mydomain.com, [func].mydomain.com, [media].mydomain.com, etc., &hellip;[it]&hellip;
+allows &hellip;[us]&hellip; to achieve a multiple of the per server connection limit.
+(http://www.stevesouders.com/blog/2008/03/20/roundup-on-parallel-connections/#more-9)
+</blockquote>
+Steve Souders. (http://www.stevesouders.com/)
 
 This also alows us to optimize each sub-domain for its particular job and is used
-extensivaly in many of the subsaquantly mentiond&nbsp;features.
+extensivaly in many of the subsaquantly mentiond features.
 
-Development&nbsp;Mode Switching
--------------------------------
+Development Mode Switching
+--------------------------
 
 By using a <em>dev.</em> sub-domain we can switch between differant views of
 the same live website, automaticaly toggaling between debuging features and
 optimized performance. Working in this way also enables us to layer improvments
 onto the live site without interfering with its current state until each
-change&nbsp;is&nbsp;vetted.
+change is vetted.
 
----Scratch List---
+SCRATCH LIST
 
 The Scratch List file (<em>list.scratch</em>) is provided as the
 place to list all current Scratch Template and Scratch CSS files and is
@@ -48,15 +48,41 @@ the default root view when in Development Mode. This gives one easy
 stating point from which developers can record, and clients view,
 evolving ideas for the sites development.
 
----Scratch Template Files---
+SCRATCH TEMPLATE FILES
 
 Scratch Template Files (files with a <em>.scratch</em> extension)
 provid an effective method for testing new markup alone side all the
 other website paraphenalia (i.e. its style and function), whilst being
 inacccesible through the live site.
 
----Needs Rebuild Warning Notification---
+NEEDS REBUILD WARNING NOTIFICATION
 
 If changes have been made that effect the live site without building
 
 ...
+
+Cascading Style Sheet Server (CSS-S)
+------------------------------------
+
+ - Data URIs making CSS sprites
+ - obsolete(http://www.nczonline.net/blog/2010/07/06/data-uris-make-css-sprites-obsolete/), using
+CSSEmbed(https://github.com/nzakas/cssembed).
+ - Losslessly optimization of PNG and JPG files prior to embedding Data URIs. Using
+Trimage(http://trimage.org/).
+ - ...
+
+JavaScript Server (JS-S)
+------------------------
+
+Media Server
+------------
+
+ - Content Negosiation (favouring SGV)?...
+ - Losslessly optimization of PNG and JPG files. Using Trimage(http://trimage.org/).
+ - ...
+
+Live Server Performance?...
+---------------------------
+
+ - Automatically passes YSlow (minus CND)
+ - Automatic versioning of css, javascript and media files
