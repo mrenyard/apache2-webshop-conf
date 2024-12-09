@@ -17,7 +17,7 @@ body {
   position: relative;
   margin: 0 auto;
   padding: 30px;
-  max-width: 960px; height: 900px;
+  max-width: 960px;
   background-color: #FFFFFF;
 }
 
@@ -29,34 +29,38 @@ body {
 
     </style>
   </head>
-  <body id="[site-domain]" class="[this-page-type]">
+  <body>
     <header role="banner">
 <!-- include header -->
     </header>
     <div id="main" role="main">
       <h1>Index of websites</h1>
-<!--
-if ($handle = opendir('/path/to/files')) {
-    echo "Directory handle: $handle\n";
-    echo "Entries:\n";
+<?php
+if ($handle = opendir('../')) {
 
-    /* This is the correct way to loop over the directory. */
-    while (false !== ($entry = readdir($handle))) {
-        echo "$entry\n";
+  while (false !== ($entry = readdir($handle))) {
+
+    if (
+      (is_link('../' . $entry)) &&
+      (is_dir('../' . $entry)) &&
+      (!(strpos ($entry, 'style') === 0)) &&
+      (!(strpos ($entry, 'func') === 0)) &&
+      (!(strpos ($entry, 'media') === 0)) &&
+      (!(strpos ($entry, 'dev') === 0))
+    ) {
+      $domain = $entry . '.' . getenv('HOSTNAME');
+?>
+      <article style="min-height:80px;"><a href="http://<?=$domain; ?>" style="text-decoration:none;color:inherit;">
+        <img src="http://<?=$domain; ?>/apple-touch-icon-precomposed.png" style="float:left;margin-right:5px;" />
+        <h1><?=$entry; ?></h1>
+        </a><a href="http://dev.<?=$domain; ?>">Development Version</a>
+      </article>
+<?php
+      }
     }
-
-    /* This is the WRONG way to loop over the directory. */
-    while ($entry = readdir($handle)) {
-        echo "$entry\n";
-    }
-
     closedir($handle);
 }
--->
-      <a class="bookmarklet" href="javascript:(function()%7Bdocument.body.innerHTML+='%3Cdiv%20style=%22z-index:9999;position:absolute;top:0;right:0;bottom:0;left:0;padding:inherit;margin:0;background-color:transparent;background-position:center;background-size:100%%20100%;background-repeat:no-repeat;background-image:url(//www.<?=getenv('HOSTNAME'); ?>/12bar-grid.svg);background-origin:content-box;%22%3E%3C/div%3E'%7D)();">Responsive Grid</a>
+?>
     </div>
-    <footer role="contentinfo">
-<!-- include footer -->
-    </footer>
   </body>
 </html>

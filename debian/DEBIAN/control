@@ -4,14 +4,13 @@ Section: base
 Priority: optional
 Architecture: all
 Pre-Depends: debconf (>= 0.2.17)
-Depends: apache2, mysql-server, php5, php5-xdebug, libapache2-mod-php5, php5-mysql, php-pear
-Suggests: svelte, webproject-tools
-Maintainer: mrenyard72@gmail.com
-Description: Apache2 WebShop Configuration. Optimized webserver setup.
+Depends: apache2, openssl, php, php-xdebug, libapache2-mod-php, php-mysql
+Suggests: ramp, webproject-tools
+Maintainer: renyard.m@gmail.com
+Description: Apache2 WebShop Configuration. The optimized webserver setup recommended for RAMP project hosting.
  Includes such features as:
  - Maximised Concurent Server Connections
  - Development Mode Switching
      including specialist scratch files (css/html)
-     firePHP output as standard
+     ChromePHP output as standard
  - Live Server Performance Advancements
- - with PhpDocumentor and PHPUnit
