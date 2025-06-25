@@ -45,7 +45,9 @@ for IP in ${REMOTE_IPS}; do
 done;
 
 echo "ADDING SERVER SSL CERTIFICATE" 
+sudo ufw allow 'Apache Full';
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt;
+#sudo certbot --apache
 
 sudo a2enconf webshop.local;
 

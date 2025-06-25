@@ -48,12 +48,12 @@ if ($handle = opendir('../')) {
       (!(strpos ($entry, 'media') === 0)) &&
       (!(strpos ($entry, 'dev') === 0))
     ) {
-      $domain = $entry . '.' . getenv('HOSTNAME');
+      $domain = $entry . '.' . getenv('HOSTNAME') . '.lan';
 ?>
-      <article style="min-height:80px;"><a href="http://<?=$domain; ?>" style="text-decoration:none;color:inherit;">
-        <img src="http://<?=$domain; ?>/apple-touch-icon-precomposed.png" style="float:left;margin-right:5px;" />
+      <article style="min-height:80px;"><a href="//<?=$domain; ?>" style="text-decoration:none;color:inherit;">
+        <img src="//<?=$domain; ?>/apple-touch-icon-precomposed.png" style="float:left;margin-right:5px;" />
         <h1><?=$entry; ?></h1>
-        </a><a href="http://dev.<?=$domain; ?>">Development Version</a>
+        </a><a href="//dev.<?=$domain; ?>">Development Version</a>
       </article>
 <?php
       }
